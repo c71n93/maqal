@@ -1,0 +1,66 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Ваш профиль
+{% endblock %}
+
+{% block page-lead %}
+Здесь находится вся информация о Вас.
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Блок статистики -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ваша статистика</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Всего пословиц:</strong> {{ proverbs_count }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Дата регистрации:</strong> {{ user.date_joined|date:"d.m.Y" }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <!-- Список пословиц -->
+            <h3 class="mb-4">Ваши пословицы</h3>
+            
+            {% if user_proverbs %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Пословица (каз.)</th>
+                            <th>Перевод (рус.)</th>
+                            <th>Дата добавления</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for proverb in user_proverbs %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ proverb.kazakh_text }}</td>
+                            <td>{{ proverb.russian_text }}</td>
+                            <td>{{ proverb.modified_at|date:"d.m.Y H:m" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                Вы пока не добавили ни одной пословицы.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

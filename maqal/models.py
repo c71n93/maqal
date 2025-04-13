@@ -17,3 +17,6 @@ class Proverb(models.Model):
 
     def __str__(self):
         return str(self.kazakh_text)
+
+    class Meta:
+        ordering = ['-modified_at']

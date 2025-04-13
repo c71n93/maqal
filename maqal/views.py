@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
+from .models import Proverb
 from .forms import ProverbForm
 from . import proverbs_db
 
@@ -59,3 +60,14 @@ def add_proverb_view(request):
     else:
         form = ProverbForm()
     return render(request, "add_proverb.html", {'form': form})
+
+@login_required
+def profile_view(request):
+    """View profile"""
+    user_proverbs = Proverb.objects.filter(author=request.user).order_by('-modified_at')
+    context = {
+        'proverbs_count': user_proverbs.count(),
+        'user_proverbs': user_proverbs,
+        'user': request.user
+    }
+    return render(request, 'profile.html', context)
