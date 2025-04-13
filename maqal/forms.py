@@ -1,8 +1,29 @@
 """Forms"""
 from django import forms
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.utils.text import normalize_newlines
 from .models import Proverb
+
+
+class MaqalUserCreationForm(UserCreationForm):
+    """Form for user registration"""
+    username = forms.CharField(
+        label="Логин",
+        validators=[
+            MinLengthValidator(3, "Логин должен содержать минимум 3 символа"),
+            MaxLengthValidator(63, "Логин не может быть длиннее 63 символов")
+        ],
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'От 3 до 63 символов'
+        })
+    )
+
+    class Meta(UserCreationForm.Meta):
+        fields = ('username', 'password1', 'password2')
+
 
 class ProverbForm(forms.ModelForm):
     """Form for proverbs"""

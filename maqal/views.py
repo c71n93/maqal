@@ -1,10 +1,10 @@
 """Views for maqal application."""
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from .models import Proverb
-from .forms import ProverbForm
+from .forms import ProverbForm, MaqalUserCreationForm
 from . import proverbs_db
 
 def index_view(request):
@@ -32,13 +32,13 @@ def login_view(request):
 def register_view(request):
     """User register page."""
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid(): # TODO: validate, that username length is [3, 30]
+        form = MaqalUserCreationForm(request.POST)
+        if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('index')
     else:
-        form = UserCreationForm()
+        form = MaqalUserCreationForm()
     return render(request, 'register.html', {'form': form})
 
 
@@ -50,7 +50,7 @@ def logout_view(request):
 @login_required
 def add_proverb_view(request):
     """Add proverb action"""
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ProverbForm(request.POST)
         if form.is_valid():
             proverb = form.save(commit=False)
