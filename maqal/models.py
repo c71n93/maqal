@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 class Proverb(models.Model):
     """Stores proverbs"""
 
-    kazakh_text = models.TextField()
+    kazakh_text = models.TextField(unique=True)
     russian_text = models.TextField()
     author = models.ForeignKey(
         get_user_model(),

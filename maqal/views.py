@@ -1,13 +1,16 @@
 """Views for maqal application."""
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
+from .forms import ProverbForm
 from . import proverbs_db
 
 def index_view(request):
     """Renders the main index page. Also displays all proverbs."""
     proverbs = proverbs_db.all_proverbs()
     return render(request, "index.html", context={"proverbs": proverbs})
+
 
 def login_view(request):
     """User login page."""
@@ -24,6 +27,7 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+
 def register_view(request):
     """User register page."""
     if request.method == 'POST':
@@ -36,7 +40,22 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
+
 def logout_view(request):
     """Logout action"""
     logout(request)
     return index_view(request)
+
+@login_required
+def add_proverb_view(request):
+    """Add proverb action"""
+    if request.method == "POST":
+        form = ProverbForm(request.POST)
+        if form.is_valid():
+            proverb = form.save(commit=False)
+            proverb.author = request.user
+            proverb.save()
+            return redirect('index')
+    else:
+        form = ProverbForm()
+    return render(request, "add_proverb.html", {'form': form})

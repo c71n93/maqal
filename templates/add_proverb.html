@@ -1,0 +1,50 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Добавить пословицу
+{% endblock %}
+
+{% block page-lead %}
+Другие пользователи сайта увидят эту пословицу вместе с Вашим никнеймом и датой добавления.
+{% endblock %}
+
+{% block content %}
+<div class="container-sm px-5 py-5" id="term-form">
+    <form method="post">
+        <div class="row px-5 py-2">
+            <h3>Ваша пословица</h3>
+        </div>
+        <div class="row px-5 py-2">
+            <div class="col-md-6">
+                <label for="kazakh_text">Пословица на казахском</label>
+                {{ form.kazakh_text }}
+                {% if form.kazakh_text.errors %}
+                    <div class="alert alert-danger mt-2">
+                        {{ form.kazakh_text.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label for="russian_text">Перевод пословицы на русский</label>
+                {{ form.russian_text }}
+                {% if form.russian_text.errors %}
+                    <div class="alert alert-danger mt-2">
+                        {{ form.russian_text.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <div class="row px-5 py-2">
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
