@@ -6,21 +6,44 @@
     <!-- load static -->
     {% load static %}
     <!-- CSS -->
-    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <!-- Bootstrap icons  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 <main>
     <div class="container">
         <header>
+            <!-- Name and logo -->
             <a href="/" class="text-dark text-decoration-none">
                 <div class="fs-2">
                     <span>Мақал-мәтелдер</span>
                 </div>
             </a>
+            {% if user.is_authenticated %}
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle"></i> {{ user.username }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <!-- Auth buttons -->
+            <div class="btn-group">
+                <a href="{% url 'login' %}" class="btn btn-outline-primary">
+                    <i class="bi bi-box-arrow-in-right"></i> Войти
+                </a>
+                <a href="{% url 'register' %}" class="btn btn-primary">
+                    <i class="bi bi-person-plus"></i> Регистрация
+                </a>
+            </div>
+            {% endif %}
         </header>
         <div class="bg-light rounded-4" id="title-box">
             <div class="container-fluid py-3">
-                <h1 class="display-1 fw-bold">{% block page-title %}{% endblock %}</h1>
+                <h1 class="display-4 fw-bold">{% block page-title %}{% endblock %}</h1>
                 <p class="fs-4">{% block page-lead %}{% endblock %}</p>
             </div>
         </div>
@@ -29,11 +52,12 @@
             <div class="container">
                 <a href="https://github.com/c71n93/maqal" 
                    class="btn btn-sm btn-outline-secondary">
-                   GitHub
+                   <i class="bi bi-github fs-4"></i> GitHub
                 </a>
             </div>
         </footer>
     </div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
