@@ -1,27 +1,19 @@
 """Models for maqal application."""
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 class Proverb(models.Model):
     """Stores proverbs"""
 
-    kazakh_text = models.TextField(
-        verbose_name="Текст на казахском"
-    )
-    russian_text = models.TextField(
-        verbose_name="Перевод на русский"
-    )
+    kazakh_text = models.TextField()
+    russian_text = models.TextField()
     author = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,  # The proverb will stay even if user author will be deleted
+        get_user_model(),
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name="Автор"
     )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="Дата добавления"
-    )
+    modified_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.kazakh_text)

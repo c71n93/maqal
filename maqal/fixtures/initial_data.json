@@ -4,9 +4,9 @@
     "pk": 1,
     "fields": {
         "kazakh_text": "Eр дәулеті — еңбек",
-        "russian_text": "богатство молодца в труде",
+        "russian_text": "Богатство молодца в труде",
         "author": null,
-        "created_at": "2025-04-12T17:30:58.348Z"
+        "modified_at": "2025-04-12T17:30:58.348Z"
     }
 }
 ]
