@@ -1,16 +1,21 @@
 {% extends "base_page.html" %}
 
 {% block page-title %}
-Мақал-мәтелдер
+Пословицы на казахском
 {% endblock %}
 
 {% block page-lead %}
-қотақ жеме жүреміз
+"Мақал-мәтелдер" переводится с казахского как "пословицы и поговорки". 
+Этот сайт является базой с пословицами на казахском языке с переводом на русский.
+Пословицы отражают колорит языка и культуры, а их изучение идеально подходит для более глубокого погружения в язык.
+<br>
+На этом сайте можно регистрироваться, добавлять свои пословицы и смотреть пословицы других пользователей. 
+Присоединяйтесь — добавляйте пословицы и делитесь находками!
 {% endblock %}
 
 {% block content %}
-<div class="container px-4 py-5" id="project-contents">
-    <h2 class="border-bottom">Мақал-мәтелдер</h2>
+<div class="container px-2 py-3" id="project-contents">
+    <h2 class="border-bottom">Список всех пословиц</h2>
     {% if user.is_authenticated %}
     <!-- Add proverb button -->
     <div class="d-flex justify-content-end mb-4">
@@ -30,7 +35,7 @@
         </a>
     </div>
     {% endif %}
-    <div class="container px-4 py-5" id="proverbs-table">
+    <div class="container px-2" id="proverbs-table">
         <div class="table-responsive">
             <table class="table table-striped table-sm">
               <thead>
